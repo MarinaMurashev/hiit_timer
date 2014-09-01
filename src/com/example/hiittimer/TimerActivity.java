@@ -10,6 +10,8 @@ public class TimerActivity extends Activity {
 	TextView mTimeRemainingText;
 	CountDownTimer mRestCountDownTimer;
 	CountDownTimer mSprintCountDownTimer;
+	int mRestSeconds = 10;
+	int mSprintSeconds = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,17 +19,17 @@ public class TimerActivity extends Activity {
         setContentView(R.layout.activity_timer);
         
         mTimeRemainingText = (TextView) findViewById(R.id.time_left);
-        mRestCountDownTimer = new CountDownTimer(20000, 1000) {
+        mRestCountDownTimer = new CountDownTimer(mRestSeconds * 1000, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                mTimeRemainingText.setText("sprint seconds remaining: " + millisUntilFinished / 1000);
+                mTimeRemainingText.setText("rest seconds remaining: " + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
-            	mSprintCountDownTimer = new CountDownTimer(10000, 1000) {
+            	mSprintCountDownTimer = new CountDownTimer(mSprintSeconds * 1000, 1000) {
 
                     public void onTick(long millisUntilFinished) {
-                        mTimeRemainingText.setText("rest seconds remaining: " + millisUntilFinished / 1000);
+                        mTimeRemainingText.setText("sprint seconds remaining: " + millisUntilFinished / 1000);
                     }
 
                     public void onFinish() {
