@@ -19,26 +19,36 @@ public class TimerActivity extends Activity {
         setContentView(R.layout.activity_timer);
         
         mTimeRemainingText = (TextView) findViewById(R.id.time_left);
-        mRestCountDownTimer = new CountDownTimer(mRestSeconds * 1000, 1000) {
+        setRestCountDownTimer();
+        setSprintCountDownTimer();
+        
+        mRestCountDownTimer.start();
+    }
+    
+    private void setRestCountDownTimer(){
+    	mRestCountDownTimer = new CountDownTimer(mRestSeconds * 1000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 mTimeRemainingText.setText("rest seconds remaining: " + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
-            	mSprintCountDownTimer = new CountDownTimer(mSprintSeconds * 1000, 1000) {
-
-                    public void onTick(long millisUntilFinished) {
-                        mTimeRemainingText.setText("sprint seconds remaining: " + millisUntilFinished / 1000);
-                    }
-
-                    public void onFinish() {
-                        mRestCountDownTimer.start();
-                    }
-                 }.start();
+            	mSprintCountDownTimer.start();
             }
-         }.start();
-        
+         };
     }
     
+    private void setSprintCountDownTimer(){
+    	mSprintCountDownTimer = new CountDownTimer(mSprintSeconds * 1000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                mTimeRemainingText.setText("sprint seconds remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                mRestCountDownTimer.start();
+            }
+         };
+    }
+        
 }
