@@ -1,7 +1,5 @@
 package com.example.hiittimer;
 
-import java.util.Arrays;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -17,6 +15,8 @@ public class TimerFragment extends Fragment {
 	TextView mTimeRemainingText;
 	CountDownTimer mRestCountDownTimer;
 	CountDownTimer mSprintCountDownTimer;
+	TextView mTotalTimeElapsedText;
+	private int mTotalTimeElapsed = 0;
 	private static int SECONDS_OF_REST = 10;
 	private static int SECONDS_OF_SPRINT = 20;
 	private static int VIBRATION_DURATION_MILLISECONDS = 400;
@@ -32,8 +32,9 @@ public class TimerFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
 		View view = inflater.inflate(R.layout.fragment_timer, parent, false);
 		
-        
+		mTotalTimeElapsedText = (TextView) view.findViewById(R.id.total_time_elapsed);
         mTimeRemainingText = (TextView) view.findViewById(R.id.time_left);
+        
         Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         setRestCountDownTimer(vibrator);
         setSprintCountDownTimer(vibrator);
@@ -47,11 +48,15 @@ public class TimerFragment extends Fragment {
     	mRestCountDownTimer = new CountDownTimer(SECONDS_OF_REST * 1000, 1000) {
 
             public void onTick(long millisUntilFinished) {
+            	mTotalTimeElapsed += 1;
+            	
             	long seconds_until_finished = millisUntilFinished / 1000;
             	if(listContainsElement(SECONDS_LEFT_OF_REST_VIBRATIONS, (int) seconds_until_finished)){
             		vibrator.vibrate(VIBRATION_DURATION_MILLISECONDS);
             	}
                 mTimeRemainingText.setText("rest seconds remaining: " + seconds_until_finished);
+                mTotalTimeElapsedText.setText("Total Time: " + mTotalTimeElapsed);
+                Log.d("TIMER_FRAGMETN",mTotalTimeElapsedText.getText().toString());
             }
 
             public void onFinish() {
@@ -64,13 +69,15 @@ public class TimerFragment extends Fragment {
     	mSprintCountDownTimer = new CountDownTimer(SECONDS_OF_SPRINT * 1000, 1000) {
 
             public void onTick(long millisUntilFinished) {
-            	long seconds_until_finished = millisUntilFinished / 1000;
+            	mTotalTimeElapsed += 1;
             	
+            	long seconds_until_finished = millisUntilFinished / 1000;
             	if(listContainsElement(SECONDS_LEFT_OF_SPRINT_VIBRATIONS, (int) seconds_until_finished)){
             		vibrator.vibrate(VIBRATION_DURATION_MILLISECONDS);
             	}
             	
                 mTimeRemainingText.setText("sprint seconds remaining: " + seconds_until_finished);
+                mTotalTimeElapsedText.setText("Total Time: " + mTotalTimeElapsed);
             }
 
             public void onFinish() {

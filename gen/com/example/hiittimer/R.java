@@ -25,7 +25,8 @@ public final class R {
     }
     public static final class id {
         public static final int fragmantContainer=0x7f070000;
-        public static final int time_left=0x7f070001;
+        public static final int time_left=0x7f070002;
+        public static final int total_time_elapsed=0x7f070001;
     }
     public static final class layout {
         public static final int activity_timer=0x7f030000;
