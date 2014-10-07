@@ -2,6 +2,8 @@
 <resources>
 
     <string name="app_name">HiitTimer</string>
+    <string name="rest_seconds_setting_title">Seconds of Rest</string>
+    <string name="intensity_seconds_setting_title">Seconds of Intensity</string>
 
 
 </resources>

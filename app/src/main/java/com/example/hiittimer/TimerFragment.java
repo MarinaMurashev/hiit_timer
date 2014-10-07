@@ -17,14 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.hiittimer.data_objects.Setting;
+
 public class TimerFragment extends Fragment {
 	TextView mTimeRemainingText;
 	CountDownTimer mRestCountDownTimer;
 	CountDownTimer mSprintCountDownTimer;
 	TextView mTotalTimeElapsedText;
+    private Setting setting;
 	private int mTotalTimeElapsed = 0;
-	private static int SECONDS_OF_REST = 10;
-	private static int SECONDS_OF_SPRINT = 20;
 	private static int VIBRATION_DURATION_MILLISECONDS = 400;
 	private static int[] SECONDS_LEFT_OF_REST_VIBRATIONS = { 1, 2, 3 };
 	private static int[] SECONDS_LEFT_OF_SPRINT_VIBRATIONS = { 1 };
@@ -32,7 +33,12 @@ public class TimerFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
+        if (savedInstanceState != null && savedInstanceState.containsKey("settingsObject")) {
+            setting = (Setting) savedInstanceState.get("settingsObject");
+        } else {
+            setting = new Setting();
+        }
+        setRetainInstance(true);
         setHasOptionsMenu(true);
 	}
 
@@ -71,7 +77,7 @@ public class TimerFragment extends Fragment {
 	}
 	
 	private void setRestCountDownTimer(final Vibrator vibrator){
-    	mRestCountDownTimer = new CountDownTimer(SECONDS_OF_REST * 1000, 1000) {
+    	mRestCountDownTimer = new CountDownTimer(setting.getSeconds_of_rest() * 1000, 1000) {
 
             public void onTick(long millisUntilFinished) {
             	mTotalTimeElapsed += 1;
@@ -91,7 +97,7 @@ public class TimerFragment extends Fragment {
     }
     
     private void setSprintCountDownTimer(final Vibrator vibrator){
-    	mSprintCountDownTimer = new CountDownTimer(SECONDS_OF_SPRINT * 1000, 1000) {
+    	mSprintCountDownTimer = new CountDownTimer(setting.getSeconds_of_sprint() * 1000, 1000) {
 
             public void onTick(long millisUntilFinished) {
             	mTotalTimeElapsed += 1;

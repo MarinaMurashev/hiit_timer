@@ -7,6 +7,30 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="I'M IN SETTINGS"
+        android:text="@string/rest_seconds_setting_title"
         />
+
+    <com.example.hiittimer.utils.CustomNumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/secondsRestPicker"
+        max="100"
+        min="10"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/intensity_seconds_setting_title"
+        />
+
+    <com.example.hiittimer.utils.CustomNumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/secondsIntensityPicker"
+        max="100"
+        min="10"
+        />
+
+
 </LinearLayout>
